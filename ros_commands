@@ -1,0 +1,64 @@
+##Drones_project:
+git commit -m "Comment" -a
+git push origin main
+roslaunch car_model twist_driver.launch (launches rviz)
+roslaunch car_model gazebo.launch (launches gazebo+rviz with both RGBCamera and Pointcloud)
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py (launches the keyboard controller)
+
+## Ros common:
+#catkin_make (in the catkin_ws folder)
+#source ~/.bashrc
+#roscd <pkg> 
+#rosnode (will print many info you can get)
+#rospack list-names
+#rostopic (many options)
+
+## Launch:
+roslaunch <pkg> <file.launch>
+
+## Run:
+rosrun <pkg> <file.py>
+
+## Topics:
+rostopic list
+rostopic info /<topic_name>
+#Here I find the type of message that is being exchanged. (e.g. sensor_msgs/LaserScan)
+
+## Messages:
+rosmsg show <type_of_message>/<eventual> (e.g. sensor_msgs/LaserScan)
+#Here I get the arrays contained in the msg.
+
+## Scripts
+#Setup:
+#! /usr/bin/env python3
+import rospy
+
+#Make it executable:
+Go to src of the package and chmod +x reader.py
+
+#Import msgs:
+from <pkg>.msg import <message name>
+
+#Init node:
+rospy.init_node('<node_name>')
+
+#Subscriber:
+sub = rospy.Subscriber('<topic_name>', <msg_name>, <function that receives msg as input>)
+(e.g. def callback(msg): whatever)
+Access nested messages: msg.pose.pose. etc 
+
+#Publisher:
+pub = rospy.Publisher('<topic_name>', <msg name>, queue_size=1)
+<variable> = <message_type>() (e.g. Twist)
+<variable>.
+pub.publish(<variable>)
+
+#Publish single msg:
+rostopic pub -1 /<topic> <msg_group>/<msg_name>
+
+#Spin:
+rate = rospy.Rate(Hz)
+while not rospy.is_shutdown(): 
+	rate.sleep()
+
+ 
